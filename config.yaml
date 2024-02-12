@@ -1,0 +1,135 @@
+# Several paths in this config file contain placeholder values {study_area} and {raster_id}
+# that are replaced with the corresponding values in the code when writing outputs
+
+# Config parameters specific to each study area
+study_areas:
+  # Quang Tri
+  quang_tri: 
+    rasters:
+      quang_tri_aft: ../data/raw/imagery/quang-tri-aft-1mpp.tif
+    raster_crs: EPSG:32648
+    raster_date: 1973-03-20
+    n_tiles: 1000
+    train_prop: 0.6 
+    val_prop: 0.2
+    test_prop: 0.2
+  
+  # Tri-border area
+  tri_border_area:
+    rasters:
+      D3C1204-200292A077: ../data/raw/imagery/D3C1204-200292A077-1mpp.tif
+      D3C1204-200292A078: ../data/raw/imagery/D3C1204-200292A078-1mpp.tif
+      D3C1204-200292A079: ../data/raw/imagery/D3C1204-200292A079-1mpp.tif
+      D3C1204-200292A080: ../data/raw/imagery/D3C1204-200292A080-1mpp.tif
+      D3C1204-200292A081: ../data/raw/imagery/D3C1204-200292A081-1mpp.tif
+      D3C1204-200292A082: ../data/raw/imagery/D3C1204-200292A082-1mpp.tif
+    raster_crs: EPSG:32648
+    raster_date: 1972-11-04
+    n_tiles: 1400
+    train_prop: 0.429 
+    val_prop: 0.143
+    test_prop: 0.428
+
+
+##### 0) Data Processing #####
+# File paths 
+tile_catalog_path: ../data/0_data_processing/{study_area}/catalog.geojson
+tiles_folder: ../data/0_data_processing/{study_area}/tiles
+footprint_path: ../data/0_data_processing/{study_area}/footprints/{raster_id}.geojson
+footprint_path_sa: ../data/0_data_processing/{study_area}/footprint.geojson
+grid_path_sa: ../data/0_data_processing/{study_area}/grids/{grid_size}.geojson
+
+# Parameters
+grid_sizes: [100, 200, 400, 800, 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000]
+
+##### 1) Crater labelling #####
+# File paths
+labels_processed_path: ../data/1_crater_labels/{study_area}/labels.geojson
+
+
+##### 2) Create training data #####
+# File paths
+tile_labels_folder: ../data/2_training_data/{study_area}/tile_labels
+tile_catalog_labels_path: ../data/2_training_data/{study_area}/catalog.geojson
+data_path: ../data/2_training_data/data.h5
+data_path_sa: ../data/2_training_data/{study_area}/data.h5
+
+# Parameters
+crater_classes: [pattern, rim, group, crescent, bowl]
+crater_ids: [1, 2, 3, 4, 5]
+boundary_id: 6
+n_classes: 7 # crater classes + boundary class + background class
+min_crater_area: 25
+
+
+##### 3) Model training #####
+# File paths
+model_path_cv: ../outputs/models/cv/{cv_setting}/model.pth
+model_path_sa: ../outputs/models/{study_area}/final_model.pth
+
+# Parameters
+n_epochs: 1000
+early_stopping_patience: 50
+batch_size: 8
+backbone: resnet50
+alpha_cv:
+  equal: [1, 1, 1, 1, 1, 1, 1]
+  factor_2: [1, 2, 2, 2, 2, 2, 2]
+  factor_3: [1, 3, 3, 3, 3, 3, 3]
+  factor_4: [1, 4, 4, 4, 4, 4, 4]
+  factor_5: [1, 5, 5, 5, 5, 5, 5]
+  factor_6: [1, 6, 6, 6, 6, 6, 6]
+
+# parameters and path for the best model during cross-validation
+# needs to be added after running the cv part of notebook 3_train_model  
+alpha_best: [1, 3, 3, 3, 3, 3, 3]
+model_path_cv_best: ../outputs/models/cv/factor_3/model.pth
+
+##### 4) Model evaluation #####
+# File paths
+pixel_eval_path: ../outputs/tables/{study_area}/pixel_eval.csv
+crater_eval_path: ../outputs/tables/{study_area}/crater_eval.csv
+
+
+##### 5) Model Prediction on KH-9 images #####
+# File paths
+prediction_path: ../data/5_model_prediction/{study_area}/pixels/{raster_id}.tif
+prediction_processed_path: ../data/5_model_prediction/{study_area}/pixels_processed/{raster_id}.tif
+prediction_polygons_path: ../data/5_model_prediction/{study_area}/crater_polygons/{raster_id}.geojson
+prediction_polygons_path_sa: ../outputs/predictions/{study_area}/crater_polygons.geojson
+prediction_centroids_path: ../data/5_model_prediction/{study_area}/crater_centroids/{raster_id}.geojson
+prediction_centroids_path_sa: ../outputs/predictions/{study_area}/crater_centroids.geojson
+
+# Parameters
+tilesize: 256
+pred_overlap: 32
+pred_batch_size: 32
+pred_num_batches: 100
+pred_nodata: 255
+pred_dtype: uint8
+postprocess_height: 5120
+postprocess_width: 5120
+postprocess_overlap: 512
+
+
+##### 6) Analysis #####
+# File paths
+thor_path: ../data/raw/thor_data_vietnam.csv
+vnm_gadm_path: ../data/raw/gadm41_VNM_0.json
+lao_gadm_path: ../data/raw/gadm41_LAO_0.json
+khm_gadm_path: ../data/raw/gadm41_KHM_0.json
+vnm_gadm1_path: ../data/raw/gadm41_VNM_1.json
+lao_gadm1_path: ../data/raw/gadm41_LAO_1.json
+khm_gadm1_path: ../data/raw/gadm41_KHM_1.json
+pois_path: ../data/raw/pois_quang_tri.geojson
+kh9_risk_area: ../data/raw/risk_area_kh9.geojson
+plots_folder: ../outputs/plots
+plots_folder_sa: ../outputs/plots/{study_area}
+corr_table_path: ../outputs/tables/{study_area}/correlations_thor_craters.csv
+
+# Parameters
+thor_color: "#D2042D"
+crater_color: "#00008B"
+crater_class_colors: ["#AA3377", "#4477AA", "#CCBB44", "#228833", "#EE6677"]
+fontsize: 8
+dpi: 300

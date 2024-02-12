@@ -1,0 +1,26 @@
+name: bomb-crater-detection
+channels:
+- pytorch
+- nvidia
+- conda-forge
+dependencies:
+- python=3.11.4
+- pytorch-cuda=11.7
+- torchvision=0.15.2
+- segmentation-models-pytorch=0.3.3
+- cartopy
+- geopandas
+- h5py
+- matplotlib
+- matplotlib-scalebar
+- notebook
+- numpy
+- pandas
+- pyproj
+- pyyaml
+- rasterio
+- seaborn
+- shapely
+- scikit-image
+- scikit-learn
+
