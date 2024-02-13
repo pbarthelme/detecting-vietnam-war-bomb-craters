@@ -1,12 +1,12 @@
 # Detecting Vietnam War bomb craters in declassified KH-9 satellite imagery
 
-This is the code repository for the manuscript *Detecting Vietnam War bomb craters in declassified KH-9 satellite imagery* which is currently under review. A preprint of the paper can be found here.
+This is the code repository for the manuscript *Detecting Vietnam War bomb craters in declassified KH-9 satellite imagery* (in submission).
 
 ## Setup
 This implementation uses Python 3.11 in combination with multiple other packages specified in the `./environment.yml` file. A more detailed environment file specifying the exact package versions used during the analysis is provided as `./environment_detailed.yml`. A conda environment with the corresponding packages can be created using the command `conda env create -f environment.yml`.
 
 ## Data Availability
-All data used for this analysis is freely available. The original, scanned KH-9 images can be downloaded from [EarthExplorer](https://earthexplorer.usgs.gov/). The georeferenced KH-9 images area available [TODO]() and [TODO](). The detected craters, trained models and other data is available [here](10.5281/zenodo.10629987). The THOR bombing records can be downloaded [here](https://data.world/datamil/vietnam-war-thor-data) (`thor_data_vietnam.csv`). The GADM boundaries used to create some of the Figures are available [here](https://gadm.org) ([Vietnam](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_0.json), [Lao PDR](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_0.json), [Cambodia](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json)).
+All data used for this analysis is freely available. The original, scanned KH-9 images can be downloaded from [EarthExplorer](https://earthexplorer.usgs.gov/). The georeferenced KH-9 images area available [here](https://doi.org/10.7488/ds/7682) (Quang Tri) and [here](https://doi.org/10.7488/ds/7683) (Tri-border area). The detected craters, trained models and other data is available [here](10.5281/zenodo.10629987). The THOR bombing records can be downloaded [here](https://data.world/datamil/vietnam-war-thor-data) (`thor_data_vietnam.csv`). The GADM boundaries used to create some of the Figures are available [here](https://gadm.org) ([Vietnam](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_0.json), [Lao PDR](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_0.json), [Cambodia](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json)).
 
 ## Structure
 The code is structured in Jupyter notebooks available in the `code/` folder. The notebooks need to be run in the correct order, indicated by the numbers in their filenames, as they rely on outputs from previous notebooks. Some functions are provided in separate files (`code/utils.py`, `code/evaluation.py` and `code/analysis.py`) to help with code organisation and reuse of functions across multiple notebooks.
