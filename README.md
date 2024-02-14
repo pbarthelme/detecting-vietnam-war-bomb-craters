@@ -5,13 +5,19 @@ This is the code repository for the manuscript *Detecting Vietnam War bomb crate
 ## Setup
 This implementation uses Python 3.11 in combination with multiple other packages specified in the `./environment.yml` file. A more detailed environment file specifying the exact package versions used during the analysis is provided as `./environment_detailed.yml`. A conda environment with the corresponding packages can be created using the command `conda env create -f environment.yml`.
 
-## Data Availability
-All data used for this analysis is freely available. The original, scanned KH-9 images can be downloaded from [EarthExplorer](https://earthexplorer.usgs.gov/). The georeferenced KH-9 images area available [here](https://doi.org/10.7488/ds/7682) (Quang Tri) and [here](https://doi.org/10.7488/ds/7683) (Tri-border area). The detected craters, trained models and other data is available [here](https://doi.org/10.5281/zenodo.10629987). The THOR bombing records can be downloaded [here](https://data.world/datamil/vietnam-war-thor-data) (`thor_data_vietnam.csv`). The GADM boundaries used to create some of the Figures are available [here](https://gadm.org) ([Vietnam](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_0.json), [Lao PDR](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_0.json), [Cambodia](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json)).
-
 ## Structure
 The code is structured in Jupyter notebooks available in the `code/` folder. The notebooks need to be run in the correct order, indicated by the numbers in their filenames, as they rely on outputs from previous notebooks. Some functions are provided in separate files (`code/utils.py`, `code/evaluation.py` and `code/analysis.py`) to help with code organisation and reuse of functions across multiple notebooks.
 
 Each notebook includes a short summary and descriptions of inputs and outputs. The corresponding parameters and file paths are specified in the `./config.yml` file. Any statistics, metrics or Figures created in the notebook that are used in the paper are also pointed out in the description. 
+
+## Data Availability
+All data used for this analysis is freely available and can be accessed via the links specified below. To replicate the setup specified in the `./config.yml` file, please create the following two folders in the root directory:
+* **data**: download this folder from the [data repository](https://doi.org/10.5281/zenodo.10629987)
+* **outputs**: create this folder and add the **predictions**, **tables** and **models** folders from the [data repository](https://doi.org/10.5281/zenodo.10629987)
+
+Add the following input data from other sources:
+* **data/raw**: the [THOR bombing records](https://data.world/datamil/vietnam-war-thor-data) (`thor_data_vietnam.csv`) and the [GADM boundaries](https://gadm.org) (both level 0 and level 1) ([Vietnam Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_0.json), [Vietnam Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_1.json), [Lao PDR Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_0.json), [Lao PDR Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_1.json), [Cambodia Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json), [Cambodia Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json))
+* **data/raw/imagery**: the georeferenced KH-9 images (all [image-id]-1mpp.tif files for the [Tri-border area repository](https://doi.org/10.7488/ds/7683) and the mosaicked quang-tri-aft-1mpp.tif file from the [Quang Tri repository](https://doi.org/10.7488/ds/7682)
 
 ### [0_extract_imagery_footprints.ipynb](code/0_extract_imagery_footprints.ipynb)
 This notebook extracts the imagery footprints of the KH-9 images (excluding no data values) as polygons. The polygons are used to avoid duplication of crater counts and as extents for plots. The notebook also creates grids of varying grid sizes for each study area that are used for the comparison of aggregated crater counts with the THOR bombing data (see analysis notebooks).
