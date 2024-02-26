@@ -19,6 +19,8 @@ Add the following input data from other sources:
 * **data/raw**: the [THOR bombing records](https://data.world/datamil/vietnam-war-thor-data) (`thor_data_vietnam.csv`) and the [GADM boundaries](https://gadm.org) (both level 0 and level 1) ([Vietnam Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_0.json), [Vietnam Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_VNM_1.json), [Lao PDR Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_0.json), [Lao PDR Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_LAO_1.json), [Cambodia Level 0](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json), [Cambodia Level 1](https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_KHM_0.json))
 * **data/raw/imagery**: the georeferenced KH-9 images (all [image-id]-1mpp.tif files for the [Tri-border area repository](https://doi.org/10.7488/ds/7683) and the mosaicked quang-tri-aft-1mpp.tif file from the [Quang Tri repository](https://doi.org/10.7488/ds/7682)
 
+## Notebok Overview
+
 ### [0_extract_imagery_footprints.ipynb](code/0_extract_imagery_footprints.ipynb)
 This notebook extracts the imagery footprints of the KH-9 images (excluding no data values) as polygons. The polygons are used to avoid duplication of crater counts and as extents for plots. The notebook also creates grids of varying grid sizes for each study area that are used for the comparison of aggregated crater counts with the THOR bombing data (see analysis notebooks).
 
